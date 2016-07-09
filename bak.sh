@@ -56,7 +56,7 @@ for folder in $(\ls ${hideString}) ; do
     folderSize=$(du -s ${folder} | cut -f1 ) ;
     if [ ${folderSize} -le 1000000000 ]; then
         bakSource="${bakSource}echo '...${folder}...'\n" ;
-        bakSource="${bakSource}if [ ! -s ${bakFolder}/${folder}.tar.gz ] || find ${folder} -newer ${bakFolder}/${folder}.tar.gz | grep . ; then\n" ;
+        bakSource="${bakSource}if [ ! -s ${bakFolder}/${folder}.tar ] || find ${folder} -newer ${bakFolder}/${folder}.tar | grep . ; then\n" ;
         bakSource="${bakSource} ${archiveCommand} ${bakFolder}/${folder}.tar ${folder}\n" ;
         bakSource="${bakSource}fi\n" ;
     fi
