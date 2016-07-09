@@ -2,8 +2,8 @@
 
 # Setting strings
 
-archiveCommand="tar -cvpszf" ;
-bakFolder="/media/jeffseif/JEFF_BACKUP" ;
+archiveCommand="tar --create --verbose --preserve-permissions --file" ;
+bakFolder="/media/jeffseif/backup" ;
 homeFolder="/home/jeffseif" ;
 bakShFilename="bak.sh" ;
 rootFolders="\
@@ -39,7 +39,7 @@ bakSource="${bakSource}cp /etc/apt/sources.list ${bakFolder}/\n\n" ;
 # Wifi passwords
 
 bakSource="${bakSource}echo 'Archiving wifi passwords'\n" ;
-bakSource="${bakSource}sudo ${archiveCommand} ${bakFolder}/wifi.tar.gz /etc/NetworkManager/system-connections/ \n\n" ;
+bakSource="${bakSource}sudo ${archiveCommand} ${bakFolder}/wifi.tar /etc/NetworkManager/system-connections/ \n\n" ;
 
 # Home content
 
@@ -57,7 +57,7 @@ for folder in $(\ls ${hideString}) ; do
     if [ ${folderSize} -le 1000000000 ]; then
         bakSource="${bakSource}echo '...${folder}...'\n" ;
         bakSource="${bakSource}if [ ! -s ${bakFolder}/${folder}.tar.gz ] || find ${folder} -newer ${bakFolder}/${folder}.tar.gz | grep . ; then\n" ;
-        bakSource="${bakSource} ${archiveCommand} ${bakFolder}/${folder}.tar.gz ${folder}\n" ;
+        bakSource="${bakSource} ${archiveCommand} ${bakFolder}/${folder}.tar ${folder}\n" ;
         bakSource="${bakSource}fi\n" ;
     fi
 done
@@ -67,7 +67,7 @@ bakSource="${bakSource}\n" ;
 
 dottedString="\ls -A | grep -e '^\.'" ;
 bakSource="${bakSource}echo '...Dotted...'\n" ;
-bakSource="${bakSource}${archiveCommand} ${bakFolder}/Dotted.tar.gz $(eval ${dottedString});" ;
+bakSource="${bakSource}${archiveCommand} ${bakFolder}/Dotted.tar $(eval ${dottedString});" ;
 
 # Create and run backup script
 
